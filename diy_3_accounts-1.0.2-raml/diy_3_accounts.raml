@@ -1,0 +1,88 @@
+#%RAML 1.0
+title: DIY_3_Accounts
+
+traits:
+  client-id-required:
+    headers:
+      client_id:
+        type: string
+      client_secret:
+        type: string
+
+/accounts:
+  get:
+    is:
+      - client-id-required
+    description: To reterive the accounts
+    headers:
+      user_id:
+    queryParameters:
+      account_type:
+        required: false
+      account_name:
+        required: false
+    responses:
+      200:
+        body:
+          application/json:
+            type: array
+            items: !include datatypes/Account.raml
+            examples:
+              output: !include examples/Accounts.raml
+
+
+
+  post:
+    is:
+      - client-id-required
+    description: To create accounts
+    headers:
+      user_id:
+    body:
+      application/json:
+        type: array
+        items: !include datatypes/Account.raml
+        examples:
+          input: !include examples/Account_Post.raml
+
+    responses:
+      201:
+        body:
+          application/json:
+            example:
+              message: Accounts Created
+              
+              
+  /{id}:
+    get:
+      is:
+        - client-id-required
+      headers:
+        user_id:
+      responses:
+        200:
+          body:
+            application/json:
+              type: !include datatypes/Account.raml
+              examples:
+                output: !include examples/Account.raml
+            
+           
+         
+            
+          
+    
+                
+   
+        
+ 
+
+  
+
+
+
+
+            
+
+
+
